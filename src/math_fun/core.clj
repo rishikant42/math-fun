@@ -1,7 +1,23 @@
 (ns math-fun.core
   (:require
-    [math-fun.sqrt :as sqrt])
+    [math-fun.sqrt :refer [sqrt]])
   (:gen-class))
+
+(defn help
+  []
+  (println "Usage:
+math sum <args>
+math multiply <args>
+math factorial <arg>
+math root <arg>
+
+options:
+-h --help    show help
+-v --version show version"))
+
+(defn error-msg
+  []
+  (println "ERROR: Missing arguments") (help))
 
 (defn sum
   [args]
@@ -32,14 +48,18 @@
   [& args]
   (let [[command & arg] args
         arg (map read-string arg)]
-    (case command
-      "sum" (println (sum arg))
+    (if (empty? arg)
+      (error-msg)
+      (case command
+        "sum" (println (sum arg))
 
-      "multiply" (println (mult arg))
+        "multiply" (println (mult arg))
 
-      "factorial" (println (fact (first arg)))
+        "factorial" (println (fact (first arg)))
 
-      "divide" (println (div arg))
+        "divide" (println (div arg))
 
-      "root" (println (sqrt/sqrt (first arg)))
-      )))
+        "square-root" (println (sqrt (first arg)))
+
+        (do (println "ERROR: Unknown command") (help))
+        ))))
