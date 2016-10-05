@@ -1,6 +1,9 @@
 (ns math-fun.core
   (:require
-    [math-fun.sqrt :refer [sqrt]])
+    [math-fun.sqrt :refer [sqrt]]
+    [math-fun.cube_root :refer [cube-root]]
+    [math-fun.is_prime :refer [prime?]]
+    )
   (:gen-class))
 
 (defn help
@@ -9,7 +12,9 @@
 math sum <args>
 math multiply <args>
 math factorial <arg>
-math root <arg>
+math square-root <arg>
+math cube-root <arg>
+math exp <args>
 
 options:
 -h --help    show help
@@ -27,6 +32,10 @@ options:
   [args]
   (reduce * args))
 
+(defn div
+  [args]
+  (reduce / args))
+
 (defn fact
   [n]
   (if (= n 1)
@@ -40,9 +49,18 @@ options:
 ;;       (iter (+ counter 1) (* counter result))))
 ;;   (iter 1 1))
 
-(defn div
-  [args]
-  (reduce / args))
+(defn exp
+  [b n]
+  (if (= n 0)
+    1
+    (* b (exp b (- n 1)))))
+
+;; (defn exp-iter [b n]
+;;   (defn iter [counter result]
+;;     (if (= counter 0)
+;;       result
+;;       (iter (- counter 1) (* b result))))
+;;   (iter n 1))
 
 (defn -main
   [& args]
@@ -60,6 +78,12 @@ options:
         "divide" (println (div arg))
 
         "square-root" (println (sqrt (first arg)))
+
+        "cube-root" (println (cube-root (first arg)))
+
+        "exp" (println (exp (first arg) (first (rest arg))))
+
+        "isprime" (println (prime? (first arg)))
 
         (do (println "ERROR: Unknown command") (help))
         ))))
