@@ -20,7 +20,7 @@ Install instructions for non-lein users:
 
 ```
 $ tar -xzf math-0.1.tar.gz
-$ cd math
+$ cd math-fun
 $ chmod a+x install.sh
 $ ./install.sh
 ```
