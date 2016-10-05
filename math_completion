@@ -1,0 +1,16 @@
+#!/bin/bash
+_math()
+{
+    local cur prev opts
+    COMPREPLY=()
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    prev="${COMP_WORDS[COMP_CWORD-1]}"
+
+    opts="--help --version sum multiply factorial divide square-root cube-root exp isprime"
+
+      if [[ $COMP_CWORD == 1 ]] ; then
+          COMPREPLY=($(compgen -W "${opts}" -- ${cur}))
+      fi
+              return 0
+}
+complete -o default -F _math math
