@@ -1,4 +1,6 @@
 (ns math-fun.core
+  (:require
+    [math-fun.sqrt :as sqrt])
   (:gen-class))
 
 (defn sum
@@ -37,4 +39,7 @@
 
       "factorial" (println (fact (first arg)))
 
-      "divide" (println (div arg)))))
+      "divide" (println (div arg))
+
+      "root" (println (sqrt/sqrt (first arg)))
+      )))
