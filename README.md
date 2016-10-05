@@ -1,37 +1,42 @@
-# math-fun
+#MATH-FUN
 
-FIXME: description
+`math` command line tool for mathematical calculation.
 
-## Installation
+Install instructions for lein users:
 
-Download from http://example.com/FIXME.
+```
+$ git clone https://github.com/rishikant42/math-fun
+$ cd math
+$ make
+$ make install
+```
 
-## Usage
+Uninstall instruction:
 
-FIXME: explanation
+```
+$ make uninstall
+```
+Install instructions for non-lein users:
 
-    $ java -jar math-fun-0.1.0-standalone.jar [args]
+```
+$ tar -xzf math-0.1.tar.gz
+$ cd math
+$ chmod a+x install.sh
+$ ./install.sh
+```
 
-## Options
+Example
 
-FIXME: listing of options this app accepts.
+```
+$ math sum 1 2 3 4 5
+15
 
-## Examples
+$ math factorial 5
+120
 
-...
+$ math multiply 2 3 4
+24
 
-### Bugs
-
-...
-
-### Any Other Sections
-### That You Think
-### Might be Useful
-
-## License
-
-Copyright © 2016 FIXME
-
-Distributed under the Eclipse Public License either version 1.0 or (at
-your option) any later version.
-# math-fun
+$ $ math divide 10.5 2
+5.25 
+```
