@@ -20,9 +20,13 @@ options:
 -h --help    show help
 -v --version show version"))
 
-(defn error-msg
+(defn missing-argument
   []
-  (println "ERROR: Missing arguments") (help))
+  (println "ERROR: Missing arguments") (help) (System/exit 1))
+
+(defn error-msg
+  [msg]
+  (println "ERROR:" msg) (help) (System/exit 1))
 
 (defn sum
   [args]
@@ -65,25 +69,39 @@ options:
 (defn -main
   [& args]
   (let [[command & arg] args
-        arg (map read-string arg)]
-    (if (empty? arg)
-      (error-msg)
-      (case command
-        "sum" (println (sum arg))
+        arg (map read-string arg)
+        first-arg (first (rest args))]
 
-        "multiply" (println (mult arg))
+    (cond (nil? command) (error-msg "Give command")
 
-        "factorial" (println (fact (first arg)))
+          ;; (and (not= command "-h") (not= command "--help")               ;A better approach to get rid of these 3 line is given below
+          ;;      (not= command "-v") (not= command "--version") 
+          ;;      (empty? arg)) (error-msg "pass arguments value")
 
-        "divide" (println (div arg))
+          (nil? first-arg) (error-msg "Pass arguments value")
 
-        "square-root" (println (sqrt (first arg)))
+          :else
 
-        "cube-root" (println (cube-root (first arg)))
+          (case command
+            "sum" (println (sum arg))
 
-        "exp" (println (exp (first arg) (first (rest arg))))
+            "multiply" (println (mult arg))
 
-        "isprime" (println (prime? (first arg)))
+            "factorial" (println (fact (first arg)))
 
-        (do (println "ERROR: Unknown command") (help))
-        ))))
+            "divide" (println (div arg))
+
+            "square-root" (println (sqrt (first arg)))
+
+            "cube-root" (println (cube-root (first arg)))
+
+            "exp" (println (exp (first arg) (first (rest arg))))
+
+            "isprime" (println (prime? (first arg)))
+
+            ("-h" "--help") (help)
+
+            ("-v" "--version") (println "math 0.1")
+
+            (error-msg "Unknown Command")
+            ))))
