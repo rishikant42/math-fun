@@ -3,6 +3,7 @@
     [math-fun.sqrt :refer [sqrt]]
     [math-fun.cube_root :refer [cube-root]]
     [math-fun.is_prime :refer [prime?]]
+    [clojure.tools.cli :refer [parse-opts]]
     )
   (:gen-class))
 
@@ -19,6 +20,9 @@ math exp <args>
 options:
 -h --help    show help
 -v --version show version"))
+
+(def fact-cli-options
+  [["-n" "--number NUMBER"  :default false]])
 
 (defn missing-argument
   []
@@ -68,9 +72,7 @@ options:
 
 (defn -main
   [& args]
-  (let [[command & arg] args
-        arg (map read-string arg)
-        first-arg (first (rest args))]
+  (let [[command & arg] args]
 
     (cond (nil? command) (error-msg "Give command")
 
@@ -85,7 +87,8 @@ options:
 
             "multiply" (println (mult arg))
 
-            "factorial" (println (fact (first arg)))
+            "factorial" (let [{:keys [number]} (get (parse-opts arg fact-cli-options) :options)]
+                          (println (fact (read-string number))))
 
             "divide" (println (div arg))
 
