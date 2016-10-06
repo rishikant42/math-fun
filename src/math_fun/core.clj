@@ -21,7 +21,7 @@ options:
 -h --help    show help
 -v --version show version"))
 
-(def fact-cli-options
+(def common-cli-options
   [["-n" "--number NUMBER"  :default false]])
 
 (defn missing-argument
@@ -87,10 +87,19 @@ options:
 
             "multiply" (println (mult arg))
 
-            "factorial" (let [{:keys [number]} (get (parse-opts arg fact-cli-options) :options)]
-                          (println (fact (read-string number))))
+            ;; "factorial" (let [{:keys [number]} (get (parse-opts arg fact-cli-options) :options)]
+            ;;               (println (fact (read-string number))))
 
-            "divide" (println (div arg))
+            "factorial" (let [{:keys [options arguments]} (parse-opts arg common-cli-options)
+                              {:keys [number]} options
+                              data (map read-string (cons number arguments))]
+                          (apply println (map fact data)))
+
+            "divide" (let [{:keys [options arguments]} (parse-opts arg common-cli-options)
+                              {:keys [number]} options
+                              data (map read-string (cons number arguments))
+                              ]
+                       (println (div data)))
 
             "square-root" (println (sqrt (first arg)))
 
