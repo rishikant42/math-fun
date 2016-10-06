@@ -74,11 +74,9 @@ options:
 
     (cond (nil? command) (error-msg "Give command")
 
-          ;; (and (not= command "-h") (not= command "--help")               ;A better approach to get rid of these 3 line is given below
-          ;;      (not= command "-v") (not= command "--version") 
-          ;;      (empty? arg)) (error-msg "pass arguments value")
-
-          (nil? first-arg) (error-msg "Pass arguments value")
+          (and (not= command "-h") (not= command "--help") 
+               (not= command "-v") (not= command "--version") 
+               (empty? arg)) (error-msg "pass arguments value")
 
           :else
 
