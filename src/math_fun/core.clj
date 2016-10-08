@@ -1,8 +1,9 @@
 (ns math-fun.core
   (:require
-    [math-fun.sqrt :refer [sqrt]]
-    [math-fun.cube_root :refer [cube-root]]
-    [math-fun.is_prime :refer [prime?]]
+    ;; [math-fun.sqrt :refer [sqrt]]
+    ;; [math-fun.cube_root :refer [cube-root]]
+    ;; [math-fun.is_prime :refer [prime?]]
+    [math-fun.basic_math :refer [sqrt cube-root prime?]]
     [clojure.tools.cli :refer [parse-opts]]
     )
   (:gen-class))
@@ -23,6 +24,10 @@ options:
 
 (def common-cli-options
   [["-n" "--number NUMBER"  :default false]])
+
+(def exp-cli-options
+  [["-b" "--base BASE"  :default false]
+   ["-p" "--power POWER"  :default false]])
 
 (defn missing-argument
   []
@@ -85,7 +90,10 @@ options:
           (case command
             "sum" (println (sum arg))
 
-            "multiply" (println (mult arg))
+            "multiply" (let [{:keys [arguments]} (parse-opts arg [])
+                             arg (map read-string arguments)
+                             ]
+                         (println (mult arg)))
 
             ;; "factorial" (let [{:keys [number]} (get (parse-opts arg fact-cli-options) :options)]
             ;;               (println (fact (read-string number))))
@@ -101,13 +109,26 @@ options:
                               ]
                        (println (div data)))
 
-            "square-root" (println (sqrt (first arg)))
+            "square-root" (let [{:keys [options arguments]} (parse-opts arg common-cli-options)
+                                {:keys [number]} options
+                                data (map read-string (cons number arguments))]
+                            (println (map sqrt data)))
 
-            "cube-root" (println (cube-root (first arg)))
+            "cube-root" (let [{:keys [options arguments]} (parse-opts arg common-cli-options)
+                                {:keys [number]} options
+                                data (map read-string (cons number arguments))]
+                            (println (map cube-root data)))
 
-            "exp" (println (exp (first arg) (first (rest arg))))
+            "exp" (let [{:keys [options]} (parse-opts arg exp-cli-options)
+                                {:keys [base power]} options
+                                base (read-string base)
+                                power (read-string power)]
+                            (println (exp base power)))
 
-            "isprime" (println (prime? (first arg)))
+            "isprime" (let [{:keys [options arguments]} (parse-opts arg common-cli-options)
+                                {:keys [number]} options
+                                data (map read-string (cons number arguments))]
+                            (println (map prime? data)))
 
             ("-h" "--help") (help)
 
