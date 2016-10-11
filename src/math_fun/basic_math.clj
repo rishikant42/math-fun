@@ -76,3 +76,52 @@
   (if (<= n 1)
     false
     (= n (smallest-divisor n))))
+
+
+;;;;;;;;;;;;;;;;;;;;;; FACTORIAL ;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defn fact
+  [n]
+  (if (= n 1)
+    1
+    (* n (fact (- n 1)))))
+
+;; (defn fact-iter [n]
+;;   (defn iter [counter result]
+;;     (if (> counter n)
+;;       result
+;;       (iter (+ counter 1) (* counter result))))
+;;   (iter 1 1))
+
+;;;;;;;;;;;;;;;;;;; EXPONENTIAL ;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+
+(defn exp
+  [b n]
+  (if (= n 0)
+    1
+    (* b (exp b (- n 1)))))
+
+;; (defn exp-iter [b n]
+;;   (defn iter [counter result]
+;;     (if (= counter 0)
+;;       result
+;;       (iter (- counter 1) (* b result))))
+;;   (iter n 1))
+
+
+;;;;;;;;;;;;;;; SUM-MULTIPLY-DIVISION ;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defn sum
+  [args]
+  (reduce + args))
+
+(defn mult
+  [args]
+  (reduce * args))
+
+(defn div
+  [args]
+  (reduce / args))

@@ -1,9 +1,6 @@
 (ns math-fun.core
   (:require
-    ;; [math-fun.sqrt :refer [sqrt]]
-    ;; [math-fun.cube_root :refer [cube-root]]
-    ;; [math-fun.is_prime :refer [prime?]]
-    [math-fun.basic_math :refer [sqrt cube-root prime?]]
+    [math-fun.basic_math :refer :all]
     [clojure.tools.cli :refer [parse-opts]]
     )
   (:gen-class))
@@ -23,7 +20,7 @@ options:
 -v --version show version"))
 
 (def common-cli-options
-  [["-n" "--number NUMBER"  :default false]])
+  [["-n" "--numbers NUMBERS"  :default false]])
 
 (def exp-cli-options
   [["-b" "--base BASE"  :default false]
@@ -37,102 +34,97 @@ options:
   [msg]
   (println "ERROR:" msg) (help) (System/exit 1))
 
-(defn sum
+(defn arg-1-binding
+  [arg]
+  (let [{:keys [options arguments]} (parse-opts arg common-cli-options)
+        {:keys [numbers]} options
+        data (map read-string (cons numbers arguments))]
+    data))
+
+(defn arg-2-binding
+  [arg]
+  (let[{:keys [options]} (parse-opts arg exp-cli-options)
+       {:keys [base power]} options
+       base (read-string base)
+       power (read-string power)]
+    (list base power)))
+
+(defn sum-handler
   [args]
-  (reduce + args))
+  (try (let [data (arg-1-binding args)]
+         (sum data))
+    (catch ClassCastException e (missing-argument))))
 
-(defn mult
+(defn mult-handler
   [args]
-  (reduce * args))
+  (try (let [data (arg-1-binding args)]
+         (mult data))
+    (catch ClassCastException e (missing-argument))))
 
-(defn div
+(defn div-handler
   [args]
-  (reduce / args))
+  (try (let [data (arg-1-binding args)]
+         (div data))
+    (catch ClassCastException e (missing-argument))))
 
-(defn fact
-  [n]
-  (if (= n 1)
-    1
-    (* n (fact (- n 1)))))
+(defn fact-handler
+  [args]
+  (let [data (arg-1-binding args)]
+    (map fact data)))
 
-;; (defn fact-iter [n]
-;;   (defn iter [counter result]
-;;     (if (> counter n)
-;;       result
-;;       (iter (+ counter 1) (* counter result))))
-;;   (iter 1 1))
+(defn sqrt-handler
+  [args]
+  (let [data (arg-1-binding args)]
+    (map sqrt data)))
 
-(defn exp
-  [b n]
-  (if (= n 0)
-    1
-    (* b (exp b (- n 1)))))
+(defn cuberoot-handler
+  [args]
+  (let [data (arg-1-binding args)]
+    (map cube-root data)))
 
-;; (defn exp-iter [b n]
-;;   (defn iter [counter result]
-;;     (if (= counter 0)
-;;       result
-;;       (iter (- counter 1) (* b result))))
-;;   (iter n 1))
+(defn prime-handler
+  [args]
+  (let [data (arg-1-binding args)]
+    (map prime? data)))
+
+(defn exp-handler
+  [args]
+  (try (let [[base  power] (arg-2-binding args)]
+    (exp base power))
+    (catch ClassCastException e (missing-argument))
+    (catch NumberFormatException e (.getMessage e))))    ;; $ lein run exp --base 3--power 4
+
 
 (defn -main
   [& args]
   (let [[command & arg] args]
 
-    (cond (nil? command) (error-msg "Give command")
+    (if (nil? command) 
+      (error-msg "Give command")
 
-          (and (not= command "-h") (not= command "--help") 
-               (not= command "-v") (not= command "--version") 
-               (empty? arg)) (error-msg "pass arguments value")
+      (case command
+        "sum" (println (sum-handler arg))
+                
+        "multiply" (println (mult-handler arg))
 
-          :else
+        "divide" (println (div-handler arg))
 
-          (case command
-            "sum" (println (sum arg))
+        "factorial" (try (apply println (fact-handler arg))
+                      (catch ClassCastException e (missing-argument)))
 
-            "multiply" (let [{:keys [arguments]} (parse-opts arg [])
-                             arg (map read-string arguments)
-                             ]
-                         (println (mult arg)))
+        "square-root" (try (println (sqrt-handler arg))
+                        (catch ClassCastException e (missing-argument)))
 
-            ;; "factorial" (let [{:keys [number]} (get (parse-opts arg fact-cli-options) :options)]
-            ;;               (println (fact (read-string number))))
+        "cube-root" (try (println (cuberoot-handler arg))
+                      (catch ClassCastException e (missing-argument)))
 
-            "factorial" (let [{:keys [options arguments]} (parse-opts arg common-cli-options)
-                              {:keys [number]} options
-                              data (map read-string (cons number arguments))]
-                          (apply println (map fact data)))
+        "exp" (println (exp-handler args))
 
-            "divide" (let [{:keys [options arguments]} (parse-opts arg common-cli-options)
-                              {:keys [number]} options
-                              data (map read-string (cons number arguments))
-                              ]
-                       (println (div data)))
+        "isprime" (try (println (prime-handler arg))
+                    (catch ClassCastException e (missing-argument)))
 
-            "square-root" (let [{:keys [options arguments]} (parse-opts arg common-cli-options)
-                                {:keys [number]} options
-                                data (map read-string (cons number arguments))]
-                            (println (map sqrt data)))
+        ("-h" "--help") (help)
 
-            "cube-root" (let [{:keys [options arguments]} (parse-opts arg common-cli-options)
-                                {:keys [number]} options
-                                data (map read-string (cons number arguments))]
-                            (println (map cube-root data)))
+        ("-v" "--version") (println "math 0.1")
 
-            "exp" (let [{:keys [options]} (parse-opts arg exp-cli-options)
-                                {:keys [base power]} options
-                                base (read-string base)
-                                power (read-string power)]
-                            (println (exp base power)))
-
-            "isprime" (let [{:keys [options arguments]} (parse-opts arg common-cli-options)
-                                {:keys [number]} options
-                                data (map read-string (cons number arguments))]
-                            (println (map prime? data)))
-
-            ("-h" "--help") (help)
-
-            ("-v" "--version") (println "math 0.1")
-
-            (error-msg "Unknown Command")
-            ))))
+        (error-msg "Unknown Command")))))
