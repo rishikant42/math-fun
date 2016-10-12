@@ -125,3 +125,22 @@
 (defn div
   [args]
   (reduce / args))
+
+;;;;;;;;;;;;;;;;;;;;; GCD ;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defn gcd
+  [a b]
+  (loop [a (abs a)
+        b (abs b)]
+    (if (= b 0)
+      a
+      (recur b (mod a b)))))
+
+;;;;;;;;;;;;;;;;;;;; Average-of-N-numbers ;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+(defn avg
+  [numbers]
+  (/ (reduce + numbers) 
+     (double (count numbers))))

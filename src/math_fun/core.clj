@@ -26,6 +26,10 @@ options:
   [["-b" "--base BASE"  :default false]
    ["-p" "--power POWER"  :default false]])
 
+(def gcd-cli-options
+  [["-a" "--number1 FIRST-NUMBER"  :default false]
+   ["-b" "--number2 SECOND-NUMBER"  :default false]])
+
 (defn missing-argument
   []
   (println "ERROR: Missing arguments") (help) (System/exit 1))
@@ -41,13 +45,21 @@ options:
         data (map read-string (cons numbers arguments))]
     data))
 
-(defn arg-2-binding
+(defn exp-binding
   [arg]
   (let[{:keys [options]} (parse-opts arg exp-cli-options)
        {:keys [base power]} options
        base (read-string base)
        power (read-string power)]
     (list base power)))
+
+(defn gcd-binding
+  [arg]
+  (let[{:keys [options]} (parse-opts arg gcd-cli-options)
+       {:keys [number1 number2]} options
+       number1 (read-string number1)
+       number2 (read-string number2)]
+    (list number1 number2)))
 
 (defn sum-handler
   [args]
@@ -65,6 +77,12 @@ options:
   [args]
   (try (let [data (arg-1-binding args)]
          (div data))
+    (catch ClassCastException e (missing-argument))))
+
+(defn avg-handler
+  [args]
+  (try (let [data (arg-1-binding args)]
+         (avg data))
     (catch ClassCastException e (missing-argument))))
 
 (defn fact-handler
@@ -89,11 +107,17 @@ options:
 
 (defn exp-handler
   [args]
-  (try (let [[base  power] (arg-2-binding args)]
+  (try (let [[base  power] (exp-binding args)]
     (exp base power))
     (catch ClassCastException e (missing-argument))
     (catch NumberFormatException e (.getMessage e))))    ;; $ lein run exp --base 3--power 4
 
+(defn gcd-handler
+  [args]
+  (try (let [[number1 number2] (gcd-binding args)]
+    (gcd number1 number2))
+    (catch ClassCastException e (missing-argument))
+    (catch NumberFormatException e (.getMessage e))))
 
 (defn -main
   [& args]
@@ -118,8 +142,12 @@ options:
         "cube-root" (try (println (cuberoot-handler arg))
                       (catch ClassCastException e (missing-argument)))
 
-        "exp" (println (exp-handler args))
+        "exp" (println (exp-handler arg))
 
+        "gcd" (println (gcd-handler arg))
+
+        "average" (println (avg-handler arg))
+        
         "isprime" (try (println (prime-handler arg))
                     (catch ClassCastException e (missing-argument)))
 
