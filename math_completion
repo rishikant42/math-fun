@@ -1,16 +1,100 @@
 #!/bin/bash
 _math()
 {
-    local cur prev opts
-    COMPREPLY=()
-    cur="${COMP_WORDS[COMP_CWORD]}"
-    prev="${COMP_WORDS[COMP_CWORD-1]}"
+  local cur prev opts
+  COMPREPLY=()
+  cur="${COMP_WORDS[COMP_CWORD]}"
+  prev="${COMP_WORDS[COMP_CWORD-1]}"
 
-    opts="--help --version sum multiply factorial divide square-root cube-root exp isprime"
+  opts="--help --version sum multiply factorial divide square-root cube-root exp isprime gcd nth-root average"
 
-      if [[ $COMP_CWORD == 1 ]] ; then
-          COMPREPLY=($(compgen -W "${opts}" -- ${cur}))
-      fi
-              return 0
+
+  case "${prev}" in
+    sum | multiply | divide | factorial | square-root \
+      | cube-root | isprime | average)
+    COMPREPLY=( $(compgen -W "--numbers" -- ${cur}) )
+    return 0
+    ;;
+
+  gcd)
+    COMPREPLY=( $(compgen -W "--number1 --number2" -- ${cur}) )
+    return 0
+    ;;
+
+  exp)
+    COMPREPLY=( $(compgen -W "--base --power" -- ${cur}) )
+    return 0
+    ;;
+
+  nth-root)
+    COMPREPLY=( $(compgen -W "--number --root" -- ${cur}) )
+    return 0
+    ;;
+
+    --numbers | --number | --number1 | --number2 | --base \
+      | --power | --root)
+    COMPREPLY=("")
+    return 0
+    ;;
+
+esac
+
+if [[ $COMP_CWORD -gt 3 ]] ; then
+
+  sec_prev="${COMP_WORDS[COMP_CWORD-2]}"
+
+  thr_prev="${COMP_WORDS[COMP_CWORD-3]}"
+
+  if [[ $thr_prev == exp ]] ; then
+
+    case "${sec_prev}" in
+      --base)
+        COMPREPLY=( $(compgen -W "--power" -- ${cur}) )
+        return 0
+        ;;
+      --power)
+        COMPREPLY=( $(compgen -W "--base" -- ${cur}) )
+        return 0
+        ;;
+    esac
+
+  fi
+
+  if [[ $thr_prev == gcd ]] ; then
+
+    case "${sec_prev}" in
+      --number1)
+        COMPREPLY=( $(compgen -W "--number2" -- ${cur}) )
+        return 0
+        ;;
+      --number2)
+        COMPREPLY=( $(compgen -W "--number1" -- ${cur}) )
+        return 0
+        ;;
+    esac
+
+  fi
+
+  if [[ $thr_prev == nth-root ]] ; then
+
+    case "${sec_prev}" in
+      --number)
+        COMPREPLY=( $(compgen -W "--root" -- ${cur}) )
+        return 0
+        ;;
+      --root)
+        COMPREPLY=( $(compgen -W "--number" -- ${cur}) )
+        return 0
+        ;;
+    esac
+
+  fi
+
+fi
+
+if [[ $COMP_CWORD == 1 ]] ; then
+  COMPREPLY=($(compgen -W "${opts}" -- ${cur}))
+fi
+return 0
 }
 complete -o default -F _math math
