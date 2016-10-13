@@ -1,6 +1,8 @@
 (ns math-fun.core
   (:require
-    [math-fun.basic_math :refer :all]
+    ;; [math-fun.basic_math :refer :all]
+    [math-fun.basic_math :refer [sqrt cube-root prime? fact exp sum mult div gcd avg]]
+    [math-fun.nth_root :refer [nth-root]]
     [clojure.tools.cli :refer [parse-opts]]
     )
   (:gen-class))
@@ -29,6 +31,10 @@ options:
 (def gcd-cli-options
   [["-a" "--number1 FIRST-NUMBER"  :default false]
    ["-b" "--number2 SECOND-NUMBER"  :default false]])
+
+(def nth-cli-options
+  [["-n" "--number NUMBER"  :default false]
+   ["-r" "--root NTH-ROOT"  :default false]])
 
 (defn missing-argument
   []
@@ -60,6 +66,14 @@ options:
        number1 (read-string number1)
        number2 (read-string number2)]
     (list number1 number2)))
+
+(defn nth-binding
+  [arg]
+  (let[{:keys [options]} (parse-opts arg nth-cli-options)
+       {:keys [number root]} options
+       number (read-string number)
+       root (read-string root)]
+    (list number root)))
 
 (defn sum-handler
   [args]
@@ -119,6 +133,13 @@ options:
     (catch ClassCastException e (missing-argument))
     (catch NumberFormatException e (.getMessage e))))
 
+(defn nth-handler
+  [args]
+  (try (let [[number root] (nth-binding args)]
+    (nth-root number root))
+    (catch ClassCastException e (missing-argument))
+    (catch NumberFormatException e (.getMessage e))))
+
 (defn -main
   [& args]
   (let [[command & arg] args]
@@ -147,6 +168,8 @@ options:
         "gcd" (println (gcd-handler arg))
 
         "average" (println (avg-handler arg))
+
+        "nth-root" (println (nth-handler arg)) 
         
         "isprime" (try (println (prime-handler arg))
                     (catch ClassCastException e (missing-argument)))
