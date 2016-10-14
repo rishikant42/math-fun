@@ -6,12 +6,12 @@ _math()
   cur="${COMP_WORDS[COMP_CWORD]}"
   prev="${COMP_WORDS[COMP_CWORD-1]}"
 
-  opts="--help --version sum multiply factorial divide square-root cube-root exp isprime gcd nth-root average"
+  opts="--help --version sum multiply factorial divide square-root cube-root exp isprime gcd nth-root average fibonacci"
 
 
   case "${prev}" in
     sum | multiply | divide | factorial | square-root \
-      | cube-root | isprime | average)
+      | cube-root | isprime | average | fibonacci)
     COMPREPLY=( $(compgen -W "--numbers" -- ${cur}) )
     return 0
     ;;

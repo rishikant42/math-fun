@@ -1,7 +1,7 @@
 (ns math-fun.core
   (:require
     ;; [math-fun.basic_math :refer :all]
-    [math-fun.basic_math :refer [sqrt cube-root prime? fact exp sum mult div gcd avg]]
+    [math-fun.basic_math :refer [sqrt cube-root prime? fact exp sum mult div gcd avg fib]]
     [math-fun.nth_root :refer [nth-root]]
     [clojure.tools.cli :refer [parse-opts]]
     )
@@ -18,6 +18,7 @@ math square-root --numbers <arg>
 math cube-root --numbers <args>
 math isprime --numbers <args>
 math average --numbers <args>
+math fibonacci  --numbers <args>
 math gcd --number1 <arg> --number2 <arg>
 math exp --base <arg> --power <arg>
 math nth-root --number <arg> --root <arg>
@@ -104,6 +105,12 @@ options:
          (avg data))
     (catch ClassCastException e (missing-argument))))
 
+(defn fib-handler
+[args]
+(try (let [data (arg-1-binding args)]
+       (map fib data))
+  (catch ClassCastException e (missing-argument))))
+
 (defn fact-handler
   [args]
   (let [data (arg-1-binding args)]
@@ -173,6 +180,8 @@ options:
         "gcd" (println (gcd-handler arg))
 
         "average" (println (avg-handler arg))
+
+        "fibonacci" (println (fib-handler arg))
 
         "nth-root" (println (nth-handler arg)) 
         
