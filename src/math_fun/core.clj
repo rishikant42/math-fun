@@ -152,6 +152,11 @@ options:
     (catch ClassCastException e (missing-argument))
     (catch NumberFormatException e (.getMessage e))))
 
+(defn print-linewise
+  [args]
+  (doseq [item args]
+    (println item)))
+
 (defn -main
   [& args]
   (let [[command & arg] args]
@@ -166,13 +171,13 @@ options:
 
         "divide" (println (div-handler arg))
 
-        "factorial" (try (apply println (fact-handler arg))
+        "factorial" (try (print-linewise (fact-handler arg))
                       (catch ClassCastException e (missing-argument)))
 
-        "square-root" (try (println (sqrt-handler arg))
+        "square-root" (try (print-linewise (sqrt-handler arg))
                         (catch ClassCastException e (missing-argument)))
 
-        "cube-root" (try (println (cuberoot-handler arg))
+        "cube-root" (try (print-linewise (cuberoot-handler arg))
                       (catch ClassCastException e (missing-argument)))
 
         "exp" (println (exp-handler arg))
@@ -181,11 +186,11 @@ options:
 
         "average" (println (avg-handler arg))
 
-        "fibonacci" (println (fib-handler arg))
+        "fibonacci" (print-linewise (fib-handler arg))
 
         "nth-root" (println (nth-handler arg)) 
         
-        "isprime" (try (println (prime-handler arg))
+        "isprime" (try (print-linewise (prime-handler arg))
                     (catch ClassCastException e (missing-argument)))
 
         ("-h" "--help") (help)
