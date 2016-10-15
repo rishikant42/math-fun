@@ -6,7 +6,7 @@ Install instructions for lein users:
 
 ```
 $ git clone https://github.com/rishikant42/math-fun
-$ cd math
+$ cd math-fun
 $ make
 $ make install
 ```
