@@ -28,15 +28,46 @@ $ ./install.sh
 Example
 
 ```
-$ math sum 1 2 3 4 5
+$ math sum --numbers  1 2 3 4 5
 15
 
-$ math factorial 5
+$ math multiply --numbers 1 2 3 4 5
 120
 
-$ math multiply 2 3 4
-24
+$ math divide --numbers 1 2 3.0
+0.16666666666666666
 
-$ $ math divide 10.5 2
-5.25 
+$ math square-root --numbers 1 2 3
+1.0
+1.4142156862745097
+1.7320508100147274
+
+$ math cube-root --numbers 1 2 3
+1.0
+1.259919956636514
+1.4422484562392204
+
+$ math factorial --numbers 1 2 3 
+1
+2
+6
+
+$ math exp --base 2 --power 10
+1024
+
+$ math isprime --numbers 1 2 3 
+false
+true
+true
+
+$ math nth-root --number 1024 --root  10
+2.000001183010332
+
+$ math fibonacci --numbers 4 5 6
+3
+5
+8
+
+$ math gcd --number1 104 --number2 20
+4
 ```
