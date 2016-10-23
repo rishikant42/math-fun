@@ -18,6 +18,8 @@ $ make uninstall
 ```
 Install instructions for non-lein users:
 
+Download tar-file: https://github.com/rishikant42/math-fun/blob/master/math-0.1.tar.gz
+
 ```
 $ tar -xzf math-0.1.tar.gz
 $ cd math-fun
