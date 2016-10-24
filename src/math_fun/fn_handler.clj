@@ -3,6 +3,7 @@
     [math-fun.basic_math :refer [sqrt cube-root prime? fact exp sum mult div gcd avg fib]]
     [math-fun.nth_root :refer [nth-root]]
     [math-fun.help :refer :all]
+    [math-fun.series_sum :refer :all]
     [clojure.tools.cli :refer [parse-opts]]
     )
   )
@@ -17,6 +18,11 @@
 (def gcd-cli-options
   [["-a" "--number1 FIRST-NUMBER"  :default false]
    ["-b" "--number2 SECOND-NUMBER"  :default false]])
+
+(def series-cli-options
+  [["-s" "--start STARTING-NUMBER"  :default false]
+   ["-e" "--end ENDING-NUMBER"  :default false]
+   ["-p" "--exponent EXPONENT"  :default false]])
 
 (def nth-cli-options
   [["-n" "--number NUMBER"  :default false]
@@ -44,6 +50,15 @@
        number1 (read-string number1)
        number2 (read-string number2)]
     (list number1 number2)))
+
+(defn series-binding
+  [arg]
+  (let[{:keys [options]} (parse-opts arg series-cli-options)
+       {:keys [start end exponent]} options
+       start (read-string start)
+       end (read-string end)
+       exponent (read-string exponent)]
+    (list start end exponent)))
 
 (defn nth-binding
   [arg]
@@ -114,6 +129,13 @@
   [args]
   (try (let [[number1 number2] (gcd-binding args)]
     (gcd number1 number2))
+    (catch ClassCastException e (missing-argument))
+    (catch NumberFormatException e (.getMessage e))))
+
+(defn series-handler
+  [args]
+  (try (let [[start end exponent] (series-binding args)]
+    (add exponent start inc end))
     (catch ClassCastException e (missing-argument))
     (catch NumberFormatException e (.getMessage e))))
 

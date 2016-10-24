@@ -15,6 +15,7 @@ math fibonacci  --numbers <args>
 math gcd --number1 <arg> --number2 <arg>
 math exp --base <arg> --power <arg>
 math nth-root --number <arg> --root <arg>
+math series-sum --start <arg> --end <arg> --exponent <arg>
 
 options:
 -h --help    show help

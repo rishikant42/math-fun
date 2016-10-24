@@ -4,6 +4,7 @@
     [math-fun.nth_root :refer [nth-root]]
     [math-fun.fn_handler :refer :all]
     [math-fun.help :refer :all]
+    ;; [math-fun.series_sum :refer :all]
     [clojure.tools.cli :refer [parse-opts]]
     )
   (:gen-class))
@@ -48,6 +49,8 @@
         
         "isprime" (try (print-linewise (prime-handler arg))
                     (catch ClassCastException e (missing-argument)))
+
+        "series-sum"  (println (series-handler arg))
 
         ("-h" "--help") (help)
 
