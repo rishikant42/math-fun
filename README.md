@@ -72,4 +72,8 @@ $ math fibonacci --numbers 4 5 6
 
 $ math gcd --number1 104 --number2 20
 4
+
+$ math series-sum --start 1 --end 5 --exponent 3
+225
+
 ```
