@@ -4,10 +4,15 @@
     [math-fun.nth_root :refer [nth-root]]
     [math-fun.fn_handler :refer :all]
     [math-fun.help :refer :all]
+    [math-fun.complex_no :refer :all]
     ;; [math-fun.series_sum :refer :all]
     [clojure.tools.cli :refer [parse-opts]]
     )
   (:gen-class))
+
+(defn display-complex
+  [z]
+  (println (list (first z) '+ (str (last z) "i"))))
 
 (defn print-linewise
   [args]
@@ -51,6 +56,8 @@
                     (catch ClassCastException e (missing-argument)))
 
         "series-sum"  (println (series-handler arg))
+
+        "complex"  (display-complex (add-complex-handler arg))
 
         ("-h" "--help") (help)
 

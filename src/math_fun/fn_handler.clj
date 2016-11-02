@@ -4,6 +4,7 @@
     [math-fun.nth_root :refer [nth-root]]
     [math-fun.help :refer :all]
     [math-fun.series_sum :refer :all]
+    [math-fun.complex_no :refer :all]
     [clojure.tools.cli :refer [parse-opts]]
     )
   )
@@ -27,6 +28,30 @@
 (def nth-cli-options
   [["-n" "--number NUMBER"  :default false]
    ["-r" "--root NTH-ROOT"  :default false]])
+
+(def make-complex-1-cli-options
+  [["-r" "--real1 REAL-NUMBER"  :default false]
+   ["-i" "--imag1 IMAG-NUMBER"  :default false]])
+
+(def make-complex-2-cli-options
+  [["-x" "--real2 REAL-NUMBER"  :default false]
+   ["-y" "--imag2 IMAG-NUMBER"  :default false]])
+
+(defn make-complex-1-binding
+  [arg]
+  (let[{:keys [options]} (parse-opts arg make-complex-1-cli-options)
+       {:keys [real1 imag1]} options
+       real1 (read-string real1)
+       imag1 (read-string imag1)]
+    (list real1 imag1)))
+
+(defn make-complex-2-binding
+  [arg]
+  (let[{:keys [options]} (parse-opts arg make-complex-2-cli-options)
+       {:keys [real2 imag2]} options
+       real2 (read-string real2)
+       imag2 (read-string imag2)]
+    (list real2 imag2)))
 
 (defn arg-1-binding
   [arg]
@@ -67,6 +92,16 @@
        number (read-string number)
        root (read-string root)]
     (list number root)))
+
+(defn add-complex-handler
+  [args]
+  (try (let [[real1 imag1] (make-complex-1-binding args)
+             [real2 imag2] (make-complex-2-binding args)
+             c1 (make-from-real-imag real1 imag1)
+             c2 (make-from-real-imag real2 imag2)]
+         (add-complex c1 c2))
+    (catch ClassCastException e (missing-argument))
+    (catch NumberFormatException e (.getMessage e))))
 
 (defn sum-handler
   [args]
