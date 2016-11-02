@@ -57,7 +57,22 @@
 
         "series-sum"  (println (series-handler arg))
 
-        "complex"  (display-complex (add-complex-handler arg))
+        "complex"  (let [[sub-command & sub-arg] arg]
+
+                     (if (nil? sub-command) 
+                       (error-msg "Give sub-command")
+
+                       (case sub-command
+                         "sum" (display-complex (add-complex-handler sub-arg))
+
+                         "subtract" (display-complex (sub-complex-handler sub-arg))
+
+                         "multiply" (display-complex (mul-complex-handler sub-arg))
+
+                         "divide" (display-complex (div-complex-handler sub-arg))
+
+                         (error-msg "Unknown sub command"))))
+
 
         ("-h" "--help") (help)
 
