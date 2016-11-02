@@ -103,6 +103,36 @@
     (catch ClassCastException e (missing-argument))
     (catch NumberFormatException e (.getMessage e))))
 
+(defn sub-complex-handler
+  [args]
+  (try (let [[real1 imag1] (make-complex-1-binding args)
+             [real2 imag2] (make-complex-2-binding args)
+             c1 (make-from-real-imag real1 imag1)
+             c2 (make-from-real-imag real2 imag2)]
+         (sub-complex c1 c2))
+    (catch ClassCastException e (missing-argument))
+    (catch NumberFormatException e (.getMessage e))))
+
+(defn mul-complex-handler
+  [args]
+  (try (let [[real1 imag1] (make-complex-1-binding args)
+             [real2 imag2] (make-complex-2-binding args)
+             c1 (make-from-real-imag real1 imag1)
+             c2 (make-from-real-imag real2 imag2)]
+         (mul-complex c1 c2))
+    (catch ClassCastException e (missing-argument))
+    (catch NumberFormatException e (.getMessage e))))
+
+(defn div-complex-handler
+  [args]
+  (try (let [[real1 imag1] (make-complex-1-binding args)
+             [real2 imag2] (make-complex-2-binding args)
+             c1 (make-from-real-imag real1 imag1)
+             c2 (make-from-real-imag real2 imag2)]
+         (div-complex c1 c2))
+    (catch ClassCastException e (missing-argument))
+    (catch NumberFormatException e (.getMessage e))))
+
 (defn sum-handler
   [args]
   (try (let [data (arg-1-binding args)]
