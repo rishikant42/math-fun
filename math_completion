@@ -6,7 +6,7 @@ _math()
   cur="${COMP_WORDS[COMP_CWORD]}"
   prev="${COMP_WORDS[COMP_CWORD-1]}"
 
-  opts="--help --version sum multiply factorial divide square-root cube-root exp isprime gcd nth-root average fibonacci series-sum"
+  opts="--help --version sum multiply factorial divide square-root cube-root exp isprime gcd nth-root average fibonacci series-sum complex"
 
 
   case "${prev}" in
@@ -36,8 +36,13 @@ _math()
     return 0
     ;;
 
+  complex)
+    COMPREPLY=( $(compgen -W "--real1 --imag1 --real2 --imag2" -- ${cur}) )
+    return 0
+    ;;
+
     --numbers | --number | --number1 | --number2 | --base \
-      | --power | --root | --end | --start | --exponent)
+      | --power | --root | --end | --start | --exponent | --real1 | --real2 | --imag1 | --imag2)
     COMPREPLY=("")
     return 0
     ;;
@@ -115,6 +120,34 @@ if [[ $COMP_CWORD -gt 3 ]] ; then
 
   fi
 
+  
+  if [[ $thr_prev == complex ]] ; then
+
+    case "${sec_prev}" in
+      --real1)
+        COMPREPLY=( $(compgen -W "--real2 --imag1 --imag2" -- ${cur}) )
+        return 0
+        ;;
+      --real2)
+        COMPREPLY=( $(compgen -W "--real1 --imag1 --imag2" -- ${cur}) )
+        return 0
+        ;;
+    
+      --imag1)
+        COMPREPLY=( $(compgen -W "--real1 --real2 --imag2" -- ${cur}) )
+        return 0
+        ;;
+
+      --imag2)
+        COMPREPLY=( $(compgen -W "--real1 --real2 --imag1" -- ${cur}) )
+        return 0
+        ;;
+    esac
+
+  fi
+
+
+
 
 
        if [[ $COMP_CWORD -gt 5 ]] ; then
@@ -159,8 +192,178 @@ if [[ $COMP_CWORD -gt 3 ]] ; then
 
             fi
 
+
+
+          if [[ $fiv_prev == complex ]] ; then
+
+            case "${for_prev}" in
+              --real1)
+                if [[ $sec_prev == --real2 ]] ; then
+                  COMPREPLY=( $(compgen -W "--imag1 --imag2" -- ${cur}) )
+                elif [[ $sec_prev == --imag1 ]] ; then
+                  COMPREPLY=( $(compgen -W "--real2 --imag2" -- ${cur}) )
+                elif [[ $sec_prev == --imag2 ]] ; then
+                  COMPREPLY=( $(compgen -W "--real2 --imag1" -- ${cur}) )
+                fi
+                return 0
+                ;;
+
+              --real2)
+                if [[ $sec_prev == --real1 ]] ; then
+                  COMPREPLY=( $(compgen -W "--imag1 --imag2" -- ${cur}) )
+                elif [[ $sec_prev == --imag1 ]] ; then
+                  COMPREPLY=( $(compgen -W "--real1 --imag2" -- ${cur}) )
+                elif [[ $sec_prev == --imag2 ]] ; then
+                  COMPREPLY=( $(compgen -W "--real1 --imag1" -- ${cur}) )
+                fi
+                return 0
+                ;;
+
+
+              --imag1)
+                if [[ $sec_prev == --real2 ]] ; then
+                  COMPREPLY=( $(compgen -W "--real1 --imag2" -- ${cur}) )
+                elif [[ $sec_prev == --real1 ]] ; then
+                  COMPREPLY=( $(compgen -W "--real2 --imag2" -- ${cur}) )
+                elif [[ $sec_prev == --imag2 ]] ; then
+                  COMPREPLY=( $(compgen -W "--real2 --real1" -- ${cur}) )
+                fi
+                return 0
+                ;;
+
+
+              --imag2)
+                if [[ $sec_prev == --real2 ]] ; then
+                  COMPREPLY=( $(compgen -W "--real1 --imag1" -- ${cur}) )
+                elif [[ $sec_prev == --real1 ]] ; then
+                  COMPREPLY=( $(compgen -W "--real2 --imag1" -- ${cur}) )
+                elif [[ $sec_prev == --imag1 ]] ; then
+                  COMPREPLY=( $(compgen -W "--real2 --real1" -- ${cur}) )
+                fi
+                return 0
+                ;;
+
+            
+            esac
+
+
+            fi
+
+
          fi
 
+
+
+			if [[ $COMP_CWORD -gt 7 ]] ; then
+				  sec_prev="${COMP_WORDS[COMP_CWORD-2]}"
+				  thr_prev="${COMP_WORDS[COMP_CWORD-3]}"
+				  for_prev="${COMP_WORDS[COMP_CWORD-4]}"
+				  fiv_prev="${COMP_WORDS[COMP_CWORD-5]}"
+				  six_prev="${COMP_WORDS[COMP_CWORD-6]}"
+				  sev_prev="${COMP_WORDS[COMP_CWORD-7]}"
+
+
+          if [[ $sev_prev == complex ]] ; then
+            case "${six_prev}" in
+              --real1)
+                if [[ $for_prev == --real2 ]] ; then
+									 if [[ $sec_prev == --imag1 ]] ; then
+											COMPREPLY=( $(compgen -W "--imag2" -- ${cur}) )
+									 else
+											COMPREPLY=( $(compgen -W "--imag1" -- ${cur}) )
+									 fi
+								elif [[ $for_prev == --imag1 ]] ; then
+									 if [[ $sec_prev == --imag2 ]] ; then
+											COMPREPLY=( $(compgen -W "--real2" -- ${cur}) )
+									 else
+											COMPREPLY=( $(compgen -W "--imag2" -- ${cur}) )
+									 fi
+								elif [[ $for_prev == --imag2 ]] ; then
+									 if [[ $sec_prev == --imag1 ]] ; then
+											COMPREPLY=( $(compgen -W "--real2" -- ${cur}) )
+									 else
+											COMPREPLY=( $(compgen -W "--imag1" -- ${cur}) )
+									 fi
+                fi
+                return 0
+                ;;
+
+              --real2)
+                if [[ $for_prev == --real1 ]] ; then
+									 if [[ $sec_prev == --imag1 ]] ; then
+											COMPREPLY=( $(compgen -W "--imag2" -- ${cur}) )
+									 else
+											COMPREPLY=( $(compgen -W "--imag1" -- ${cur}) )
+									 fi
+								elif [[ $for_prev == --imag1 ]] ; then
+									 if [[ $sec_prev == --imag2 ]] ; then
+											COMPREPLY=( $(compgen -W "--real1" -- ${cur}) )
+									 else
+											COMPREPLY=( $(compgen -W "--imag2" -- ${cur}) )
+									 fi
+								elif [[ $for_prev == --imag2 ]] ; then
+									 if [[ $sec_prev == --imag1 ]] ; then
+											COMPREPLY=( $(compgen -W "--real1" -- ${cur}) )
+									 else
+											COMPREPLY=( $(compgen -W "--imag1" -- ${cur}) )
+									 fi
+                fi
+                return 0
+                ;;
+
+              --imag1)
+                if [[ $for_prev == --real2 ]] ; then
+									 if [[ $sec_prev == --real1 ]] ; then
+											COMPREPLY=( $(compgen -W "--imag2" -- ${cur}) )
+									 else
+											COMPREPLY=( $(compgen -W "--real1" -- ${cur}) )
+									 fi
+								elif [[ $for_prev == --real1 ]] ; then
+									 if [[ $sec_prev == --imag2 ]] ; then
+											COMPREPLY=( $(compgen -W "--real2" -- ${cur}) )
+									 else
+											COMPREPLY=( $(compgen -W "--imag2" -- ${cur}) )
+									 fi
+								elif [[ $for_prev == --imag2 ]] ; then
+									 if [[ $sec_prev == --real1 ]] ; then
+											COMPREPLY=( $(compgen -W "--real2" -- ${cur}) )
+									 else
+											COMPREPLY=( $(compgen -W "--real1" -- ${cur}) )
+									 fi
+                fi
+                return 0
+                ;;
+
+              --imag2)
+                if [[ $for_prev == --real2 ]] ; then
+									 if [[ $sec_prev == --real1 ]] ; then
+											COMPREPLY=( $(compgen -W "--imag1" -- ${cur}) )
+									 else
+											COMPREPLY=( $(compgen -W "--real1" -- ${cur}) )
+									 fi
+								elif [[ $for_prev == --real1 ]] ; then
+									 if [[ $sec_prev == --imag1 ]] ; then
+											COMPREPLY=( $(compgen -W "--real2" -- ${cur}) )
+									 else
+											COMPREPLY=( $(compgen -W "--imag1" -- ${cur}) )
+									 fi
+								elif [[ $for_prev == --imag1 ]] ; then
+									 if [[ $sec_prev == --real1 ]] ; then
+											COMPREPLY=( $(compgen -W "--real2" -- ${cur}) )
+									 else
+											COMPREPLY=( $(compgen -W "--real1" -- ${cur}) )
+									 fi
+                fi
+                return 0
+                ;;
+
+            esac
+
+          fi
+
+
+
+        fi
 
 
 fi
