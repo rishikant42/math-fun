@@ -87,7 +87,14 @@ n ^ 1 / m = z ==> z^m = n
 ```
 $ math nth-root --number 1024 --root  10
 2.000001183010332
+```
+##### Fibnocci number
+fib(0) = 0                    
 
+fib((1) = 1
+
+fib(n) = fib(n-1) + fib(n-2)
+```
 $ math fibonacci --numbers 4 5 6
 3
 5
@@ -109,11 +116,15 @@ $ math series-sum --start 1 --end 5 --exponent 3
 ##### Complex arithmetic
 
 z1 = 4 + 5i
+
 z2 = 2 + 3i
 
 z1 + z2 = 6 + 8i
+
 z1 - z2 = 2 + 2i
+
 z1 * z2 = -7 + 22i
+
 z1 / z2 = 1.77 + -0.15i
 
 ```
