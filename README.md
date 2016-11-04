@@ -128,7 +128,7 @@ z1 * z2 = -7 + 22i
 z1 / z2 = 1.77 + -0.15i
 
 ```
-$ math complex sum --real1 4 --imag1 5 --real2 2 --imag2 3
+$ math complex add --real1 4 --imag1 5 --real2 2 --imag2 3
 (6 + 8i)
 
 $ math complex subtract --real1 4 --imag1 5 --real2 2 --imag2 3

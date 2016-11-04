@@ -63,7 +63,7 @@
                        (error-msg "Give sub-command")
 
                        (case sub-command
-                         "sum" (display-complex (add-complex-handler sub-arg))
+                         "add" (display-complex (add-complex-handler sub-arg))
 
                          "subtract" (display-complex (sub-complex-handler sub-arg))
 
