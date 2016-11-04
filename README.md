@@ -76,4 +76,15 @@ $ math gcd --number1 104 --number2 20
 $ math series-sum --start 1 --end 5 --exponent 3
 225
 
+$ lein run complex sum --real1 4 --imag1 5 --real2 2 --imag2 3
+(6 + 8i)
+
+$ lein run complex subtract --real1 4 --imag1 5 --real2 2 --imag2 3
+(2 + 2i)
+
+$ lein run complex multiply --real1 4 --imag1 5 --real2 2 --imag2 3
+(-6.999999999999996 + 22.0i)
+
+rishi@rishi-Vostro-3558:~/math-fun$ lein run complex divide --real1 4 --imag1 5 --real2 2 --imag2 3
+(1.7692307692307692 + -0.15384615384615388i)
 ```
