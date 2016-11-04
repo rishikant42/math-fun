@@ -42,6 +42,8 @@ is command line tool for mathematical calculation. It can be used for
    --> Greatest common divisor
    --> Exponential
    --> Nth root
+   --> series sum
+   --> complex arithmetic
 .SH EXAMPLE
 .PP
 $ math sum --numbers  1 2 3 4 5
@@ -97,6 +99,27 @@ $ math fibonacci --numbers 4 5 6
 $ math gcd --number1 104 --number2 20
 .PP
 4
+.PP
+$ math series-sum --start 1 --end 5 --exponent 3
+.PP
+225
+.PP
+$ lein run complex sum --real1 4 --imag1 5 --real2 2 --imag2 3
+.PP
+(6 + 8i)
+.PP
+$ lein run complex subtract --real1 4 --imag1 5 --real2 2 --imag2 3
+.PP
+(2 + 2i)
+.PP
+$ lein run complex multiply --real1 4 --imag1 5 --real2 2 --imag2 3
+.PP
+(-6.999999999999996 + 22.0i)
+.PP
+$ lein run complex divide --real1 4 --imag1 5 --real2 2 --imag2 3
+.PP
+(1.7692307692307692 + -0.15384615384615388i)
+
 .SH BUGS
 https://github.com/rishikant42/math-fun
 .SH AUTHOR
