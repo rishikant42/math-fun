@@ -128,15 +128,15 @@ z1 * z2 = -7 + 22i
 z1 / z2 = 1.77 + -0.15i
 
 ```
-$ lein run complex sum --real1 4 --imag1 5 --real2 2 --imag2 3
+$ math complex sum --real1 4 --imag1 5 --real2 2 --imag2 3
 (6 + 8i)
 
-$ lein run complex subtract --real1 4 --imag1 5 --real2 2 --imag2 3
+$ math complex subtract --real1 4 --imag1 5 --real2 2 --imag2 3
 (2 + 2i)
 
-$ lein run complex multiply --real1 4 --imag1 5 --real2 2 --imag2 3
+$ math complex multiply --real1 4 --imag1 5 --real2 2 --imag2 3
 (-6.999999999999996 + 22.0i)
 
-$ lein run complex divide --real1 4 --imag1 5 --real2 2 --imag2 3
+$ math complex divide --real1 4 --imag1 5 --real2 2 --imag2 3
 (1.7692307692307692 + -0.15384615384615388i)
 ```

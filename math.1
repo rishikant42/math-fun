@@ -28,6 +28,16 @@ math gcd --number1 <arg> --number2 <arg>
 math exp --base <arg> --power <arg>
 .PP
 math nth-root --number <arg> --root <arg>
+.PP
+math complex sum --real1 <arg> --imag1 <arg> --real2 <arg> --imag2 <arg>
+.PP
+math complex subtract --real1 <arg> --imag1 <arg> --real2 <arg> --imag2 <arg>
+.PP
+math complex multiply --real1 <arg> --imag1 <arg> --real2 <arg> --imag2 <arg>
+.PP
+math complex divide --real1 <arg> --imag1 <arg> --real2 <arg> --imag2 <arg>
+.PP
+math series-sum --start <arg> --end <arg> --exponent <arg>
 .SH DESCRIPTION
 .BI math
 is command line tool for mathematical calculation. It can be used for
@@ -104,19 +114,19 @@ $ math series-sum --start 1 --end 5 --exponent 3
 .PP
 225
 .PP
-$ lein run complex sum --real1 4 --imag1 5 --real2 2 --imag2 3
+$ math complex sum --real1 4 --imag1 5 --real2 2 --imag2 3
 .PP
 (6 + 8i)
 .PP
-$ lein run complex subtract --real1 4 --imag1 5 --real2 2 --imag2 3
+$ math complex subtract --real1 4 --imag1 5 --real2 2 --imag2 3
 .PP
 (2 + 2i)
 .PP
-$ lein run complex multiply --real1 4 --imag1 5 --real2 2 --imag2 3
+$ math complex multiply --real1 4 --imag1 5 --real2 2 --imag2 3
 .PP
 (-6.999999999999996 + 22.0i)
 .PP
-$ lein run complex divide --real1 4 --imag1 5 --real2 2 --imag2 3
+$ math complex divide --real1 4 --imag1 5 --real2 2 --imag2 3
 .PP
 (1.7692307692307692 + -0.15384615384615388i)
 
