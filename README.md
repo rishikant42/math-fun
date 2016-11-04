@@ -134,9 +134,9 @@ $ math complex add --real1 4 --imag1 5 --real2 2 --imag2 3
 $ math complex subtract --real1 4 --imag1 5 --real2 2 --imag2 3
 (2 + 2i)
 
-$ math complex multiply --real1 4 --imag1 5 --real2 2 --imag2 3
+$ math complex mul --real1 4 --imag1 5 --real2 2 --imag2 3
 (-6.999999999999996 + 22.0i)
 
-$ math complex divide --real1 4 --imag1 5 --real2 2 --imag2 3
+$ math complex div --real1 4 --imag1 5 --real2 2 --imag2 3
 (1.7692307692307692 + -0.15384615384615388i)
 ```

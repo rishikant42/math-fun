@@ -67,9 +67,9 @@
 
                          "subtract" (display-complex (sub-complex-handler sub-arg))
 
-                         "multiply" (display-complex (mul-complex-handler sub-arg))
+                         "mul" (display-complex (mul-complex-handler sub-arg))
 
-                         "divide" (display-complex (div-complex-handler sub-arg))
+                         "div" (display-complex (div-complex-handler sub-arg))
 
                          (error-msg "Unknown sub command"))))
 
