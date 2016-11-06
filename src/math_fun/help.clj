@@ -16,6 +16,11 @@ math gcd --number1 <arg> --number2 <arg>
 math exp --base <arg> --power <arg>
 math nth-root --number <arg> --root <arg>
 math series-sum --start <arg> --end <arg> --exponent <arg>
+math complex add --real1 <arg> --imag1 <arg> --real2 <arg> --imag2 <arg>
+math complex subtract --real1 <arg> --imag1 <arg> --real2 <arg> --imag2 <arg>
+math complex mul --real1 <arg> --imag1 <arg> --real2 <arg> --imag2 <arg>
+math complex div --real1 <arg> --imag1 <arg> --real2 <arg> --imag2 <arg>
+
 
 options:
 -h --help    show help
