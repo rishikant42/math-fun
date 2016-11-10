@@ -2,6 +2,7 @@
   (:require [clojure.test :refer :all]
             [math-fun.basic_math :refer [sqrt cube-root prime? fact exp sum mult div gcd avg fib]]
             [math-fun.series_sum :refer :all]
+            [math-fun.complex_no :refer :all]
             [math-fun.core :refer :all]))
 
 (deftest exp-test
@@ -38,3 +39,16 @@
 (deftest series-test
   (testing "series sum procedure"
     (is (= (add 3 1 inc 5) 225))))
+
+(def z1 (make-from-real-imag 4 5))
+(def z2 (make-from-real-imag 2 3))
+
+(deftest complex-test
+  (testing "add-complex procedure"
+    (is (= (add-complex z1 z2) '(6 8))))
+  (testing "sub-complex procedure"
+    (is (= (sub-complex z1 z2) '(2 2))))
+  (testing "mul-complex procedure"
+    (is (= (mul-complex z1 z2) '(-6.999999999999996 22.0))))
+  (testing "div-complex procedure"
+    (is (= (div-complex z1 z2) '(1.7692307692307692 -0.15384615384615388)))))
